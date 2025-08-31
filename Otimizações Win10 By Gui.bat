@@ -1,25 +1,17 @@
 @echo off
 title Optimizer by Gui
 color 0a
-mode con: cols=120 lines=35
+mode con: cols=90 lines=30
 
 :menu
 cls
 echo.
-rem ====== ASCII "OPTIMIZER" ======
 echo(
-echo(
-echo(
-echo(
-echo(
-echo(
-echo(
-echo(
-echo(
-echo(
-echo(
-echo.
-echo(                     by Gui
+echo(   ####  #####  #   ###   ###   #  #####    ####   #####    ####   ####
+echo(  #    #   #    #  ##  # #  ##  #     #    #    #  #    #  #    #  #   #
+echo(  #    #   #    #  #   ##    #  #    #     ######  #    #  #    #  ####
+echo(   ####    #    #  #   ##    #  #   #####  #    #  #####    ####   #   #
+echo(                                                                            (By Gui)
 echo.
 echo ========================= MENU =========================
 echo.
