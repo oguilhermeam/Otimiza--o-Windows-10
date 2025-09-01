@@ -1,41 +1,68 @@
 @echo off
 chcp 65001
-title Optimizer by Gui
+title Otimizador Windows 10 by Gui
 color 0a
 mode con: cols=90 lines=30
 
 :menu
 cls
-echo.
-echo(
-echo(   ####  #####  #   ###   ###   #  #####    ####   #####    ####   ####
-echo(  #    #   #    #  ##  # #  ##  #     #    #    #  #    #  #    #  #   #
-echo(  #    #   #    #  #   ##    #  #    #     ######  #    #  #    #  ####
-echo(   ####    #    #  #   ##    #  #   #####  #    #  #####    ####   #   #
-echo(                                                                            (By Gui)
-echo.
-echo ========================= MENU =========================
-echo.
-echo   [1] Otimizar
-echo   [2] Sair
-echo.
-set /p "opcao="Digite o numero da opcao e aperte ENTER: "
-if "%opcao%"=="1" goto otimizar
-if "%opcao%"=="2" goto sair
-echo Opcao Invalida!
+echo .
+echo   ####  #####  #   ###   ###   #  #####    ####   #####    ####   ####
+echo  #    #   #    #  ##  # #  ##  #     #    #    #  #    #  #    #  #   #
+echo  #    #   #    #  #   ##    #  #    #     ######  #    #  #    #  ####
+echo   ####    #    #  #   ##    #  #   #####  #    #  #####    ####   #   #
+echo                                                                          (By Gui)
+echo =====================================================
+echo         Otimizacoes do Windows 10 - By Gui
+echo =====================================================
+echo [1] Desempenho
+echo [2] Privacidade
+echo [3] Servicos
+echo [4] Tarefas
+echo [5] Avancado
+echo [6] Sair
+echo =====================================================
+set /p op=Escolha uma opcao:
+
+if "%op%"=="1" goto desempenho
+if "%op%"=="2" goto privacidade
+if "%op%"=="3" goto servicos
+if "%op%"=="4" goto tarefas
+if "%op%"=="5" goto avancado
+if "%op%"=="6" goto exit
+goto menu
+
+:: ================================
+:desempenho
+cls
+echo === OTIMIZACOES DE DESEMPENHO ===
+echo Aplicando Ajustes de desempenho...
+:: Comandos
+fsutil.exe behavior set disableLastAccess 1
+fsutil.exe 8dot3name set 1
 pause
 goto menu
 
-if errorlevel 2 goto sair
-if errorlevel 1 goto otimizar
-
-:otimizar
+:: ================================
+:privacidade
 cls
-echo Otimizando CPU e GPU...
-echo Comecando em 5 segundos
-timeout /t 5 /nobreak
+echo === OTIMIZACOES DE PRIVACIDADE ===
+:: Comandos
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Device Metadata" /v PreventDeviceMetadataFromNetwork /t REG_DWORD /d 1 /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d 0 /f
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d 0 /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\SQMClient\Windows" /v "CEIPEnable" /t REG_DWORD /d 1 /f
+REG ADD HKLM\Software\Microsoft\SQMClient\Windows /v CEIPEnable /d 0 /t REG_DWORD /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "AITEnable" /t REG_DWORD /d 0 /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "DisableUAR" /t REG_DWORD /d 1 /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\AutoLogger-Diagtrack-Listener" /v "Start" /t REG_DWORD /d 0 /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SQMLogger" /v "Start" /t REG_DWORD /d 0 /f
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "SmartScreenEnabled" /t REG_SZ /d Off /f
 
-echo
+pause
+goto menu
+
+
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\BTAGService" /v "Start" /t REG_DWORD /d "4" /f
 echo .
 echo
@@ -167,17 +194,22 @@ schtasks /Change /TN "MicrosoftEdgeUpdateTaskMachineUA" /Disable
 schtasks /Change /TN "Microsoft\Windows\FileHistory\File History (maintenance mode)" /Disable
 schtasks /Change /TN "Microsoft\Windows\PI\Sqm-Tasks" /Disable
 
-fsutil.exe behavior set disableLastAccess 1
-
-fsutil.exe 8dot3name set 1
 
 :: Telemetria e coleta de Dados
 
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataColletion" /v "AllowTelemetry" /t REG_DWORD /d "0" /f
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\DataColletion" /v "AllowTelemetry" /t REG_DWORD /d "0" /f
 
 
 
+
+
+
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\AppHost" /v "SmartScreenEnabled" /t REG_SZ /d "Off" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Remote Assistance" /v "FallowFullControl" /t REG_DWORD /d "0" /f
+reg add "HKCU\SOFTWARE\Microsoft\CurrentVersion\AdvertisingInfo\" /v "Enabled" /t REG_DWORD /d "0" /f
+reg add "HKCU\SOFTWARE\Microsoft\WindowCurrentVersion\AppHost" /v "EnableWebContentEvaluation" /t REG_DWORD /d "0" /f
+reg add "HKCU\Control Panel\International\User Pofiles" /v "HttpAcceptLanguageOptOut" /t REG_DWORD /d "1" /f
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\WiFi\AllowWiFiH"
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots" /v "value" /t REG_DWORD /d "0" /f
 
 
 
